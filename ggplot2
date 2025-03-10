@@ -1,6 +1,6 @@
 library(ggplot2)
 
-# 假设已经计算好的FPR和TPR值
+# Assuming already calculated FPR and TPR values
 fpr <- c(0, 0.2, 0.4, 0.6, 0.8, 1)
 tpr <- c(0, 0.4, 0.6, 0.8, 0.9, 1)
 
@@ -22,13 +22,13 @@ ggplot(df_roc, aes(x = fpr, y = tpr)) +
 library(clusterProfiler)
 library(org.Hs.eg.db)
 library(ggplot2)
-# 假设基因列表
+# Assuming a list of genes
 gene_list <- c("ENSG")
 
-# KEGG富集分析
+# KEGG enrichment analysis
 kk <- enrichKEGG(gene = gene_list, organism = "hsa", pvalueCutoff = 0.05)
 
-# 整理数据
+# Organize data
 df_kegg <- as.data.frame(kk)
 df_kegg <- df_kegg[order(df_kegg$pvalue), ]
 df_kegg$Description <- factor(df_kegg$Description, levels = df_kegg$Description)
@@ -43,15 +43,15 @@ library(clusterProfiler)
 library(org.Hs.eg.db)
 library(ggplot2)
 
-# GO富集分析
+# GO enrichment analysis
 ego <- enrichGO(gene = gene_list, OrgDb = org.Hs.eg.db, ont = "BP", pvalueCutoff = 0.05)
 
-# 整理数据
+# Organize data
 df_go <- as.data.frame(ego)
 df_go <- df_go[order(df_go$pvalue), ]
 df_go$Description <- factor(df_go$Description, levels = df_go$Description)
 
-# 绘制GO富集分析结果图
+# Plotting the results of GO enrichment analysis
 ggplot(df_go, aes(x = Description, y = -log10(pvalue))) +
   geom_bar(stat = "identity", fill = "orange") +
   coord_flip() +
